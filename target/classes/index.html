@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/vue-resource.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/axios.min.js"></script>
+    <!--框架和图标样式-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!--下拉样式-->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+
+</head>
+<body>
+<div class="page" id="page">
+
+    <div class="box" id="box">
+
+        <h4>儿童书籍查询</h4>
+        <div class="dropdown custom1">
+            <div v-on:mouseleave="dohide">
+                <ul class="dropdown2" >
+                    <li >
+                        <input v-model="keywords" name="keywords" v-on:input="dowrite" v-on:focus="dofocus" class="form-control seach_name" placeholder="请输入搜索内容"/>
+                        <a :href="'list.html?keywords=' + keywords"><i class="glyphicon glyphicon-search" ></i></a>
+                    </li>
+                    <li class="lwords" v-if="displayimgwords" v-for="item in imglist" @click="lwordsclecked">{{item.word}}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-left: 210px; margin-top: 20px;"><a href="admin.html">加入我们</a></div>
+    </div>
+
+
+    <div class="imghead">
+        <img src="picture2.jpg"/>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <!--
+            <div class="tab">
+                <ul class="tabul">
+                    <li><a href="#">全部</a></li>
+                    <li><a href="list.html?author=dalao">大牛作者</a></li>
+                    <li><a href="#">大牛出版社</a></li>
+                    <li><a href="#">0-2岁</a></li>
+                    <li><a href="#">类别</a></li>
+                </ul>
+            </div>
+            -->
+            <div style="color: #70757a; margin: 18px 5px 5px 19px; line-height: 10px;">每日推荐书目：</div>
+            <div class="booklist">
+                <div class="book" v-for="item in booklist">
+                    <div><a v-bind:href="'detail.html?bookid=' + item.id"><img class="bookimg" v-bind:src="item.imgurl" alt="书籍图片"/></a></div>
+                    <span>{{item.bookname.length>12?item.bookname.substring(0,12)+'...':item.bookname}}</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <div class="notice">
+                <div class="recotitle">
+                    <span>亲子阅读活动通知</span>
+                </div>
+                <div class="noticetxt">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2019年11月27号下午西安图书馆儿童区举办亲子阅读活动<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2019年12月8日上午长安区图书馆二楼西侧举办亲子共读活动</p>
+                </div>
+            </div>
+
+            <div class="recommend">
+                <div class="recotitle">
+                    <span>推荐书目</span>
+                </div>
+                <div class="recolist">
+                    <ul>
+                        <li>1. <a href="detail.html?bookid=7">伊索寓言</a></li>
+                        <li>2. <a href="detail.html?bookid=8">儿童卡通画大全</a></li>
+                        <li>3. <a href="detail.html?bookid=19">小牛的春天</a></li>
+                        <li>4. <a href="detail.html?bookid=48">两只狗</a></li>
+                        <li>5. <a href="detail.html?bookid=53">不再害怕和妈妈分开</a></li>
+                        <li>6. <a href="detail.html?bookid=58">彬彬的儿童礼仪日记</a></li>
+                        <li>7. <a href="detail.html?bookid=60">爱丽丝梦游仙境</a></li>
+                        <li>8. <a href="detail.html?bookid=78">汪汪的家</a></li>
+                        <li>9. <a href="detail.html?bookid=85">八十天环游地球：绘本</a></li>
+                        <li>10. <a href="detail.html?bookid=110">我的第一本亲子教养书</a></li>
+                        <li>11. <a href="detail.html?bookid=148">少儿围棋入门</a></li>
+                        <li>12. <a href="detail.html?bookid=155">狗男孩</a></li>
+                        <li>13. <a href="detail.html?bookid=177">八仙传奇：少儿版</a></li>
+                        <li>14. <a href="detail.html?bookid=194">木偶奇遇记</a></li>
+                        <li>15. <a href="detail.html?bookid=207">亲子游戏每天一个</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+<script>
+    var vm = new Vue({
+        el: "#page",
+        data: {
+            keywords:"",
+            imglist: [
+                {word: "网页特效"},
+                {word: "网页设计"},
+                {word: "前端开发"},
+                {word: "php程序员"},
+                {word: "java开发"},
+                {word: ".net编程"}],
+            displayimgwords: false,
+            booklist:[
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                {imgurl: "book1.jpg", bookname: "安徒生童话", id: "123"},
+                ]
+        },
+        methods: {
+            dofocus: function(event){
+                if(this.keywords != "")
+                    this.displayimgwords = true;
+            },
+            //输入联想词获取
+            dowrite: function (event) {
+                //判断联想li是否出现
+                if (this.keywords == "")
+                    this.displayimgwords = false;
+                else
+                    this.displayimgwords = true;
+                //post提交数据
+                var that = this;
+                axios.post('/library/book/keywords', {
+                    keywords: that.keywords
+                }).then((response) => {
+                    console.log(response);
+                    this.imglist = response.data;
+                })
+            },
+            //隐藏联想栏
+            dohide: function(event){
+                console.log(event);
+                this.displayimgwords = false;
+            },
+
+            //点击联想词填入搜索框
+            lwordsclecked: function(event){
+                console.log(event);
+                this.keywords = event.target.firstChild.data;
+                this.displayimgwords = false;
+            }
+        },
+        //请求数据列表
+        mounted: function(){
+            axios.post('/library/book/index_books').then((response) => {
+                console.log(response);
+                // this.pages = response.data.totalpage;//设置总页数
+                // this.totaldata = response.data.totaldata;//设置总数据数目
+                this.booklist = response.data;//设置书籍列表
+            });
+        }
+    });
+</script>
+
+</html>

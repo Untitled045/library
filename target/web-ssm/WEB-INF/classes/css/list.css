@@ -1,0 +1,42 @@
+
+.select ul{
+    list-style: none;
+    height: 30px;
+    margin: 0px 5px 0px 5px;
+}
+.select ul li{
+    display: block;
+    width: 120px;
+    float: left;
+    padding: 5px 5px 5px 10px;
+    background-color: #cccccc;
+}
+.select ul li:first-child{
+    background-color: burlywood;
+}
+.unselecta{
+    color: #555;
+}
+.selecteda{
+    color: #ff5d23;
+    text-decoration: underline;
+}
+.bookinfolist{
+    margin: 10px 10px 10px 10px;
+    width: 750px;
+}
+.bookinfo{
+    height: 185px;
+    display: flex;
+    flex-direction: row;
+    border-top: 1px dashed #ddd;
+}
+.info{
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+.info table span{
+    color: #007722;
+    font-weight: bold;
+}

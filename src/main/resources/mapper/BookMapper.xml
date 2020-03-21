@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.untitled.mapper.BookMapper" >
+  <resultMap id="BaseResultMap" type="cn.untitled.pojo.Book" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="isbn" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bookname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="author" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="publisher" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="pubdate" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="imgurl" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bookinfo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="authorinfo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="booktype" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="location" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, isbn, bookname, author, publisher, pubdate, address, imgurl, age, bookinfo, authorinfo, booktype, location
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from books
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from books
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.untitled.pojo.Book" >
+    insert into books (id, isbn, bookname, 
+      author, publisher, pubdate, 
+      address, imgurl, age, 
+      bookinfo, authorinfo, booktype)
+    values (#{id,jdbcType=INTEGER}, #{isbn,jdbcType=VARCHAR}, #{bookname,jdbcType=VARCHAR}, 
+      #{author,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR}, #{pubdate,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{imgurl,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{bookinfo,jdbcType=VARCHAR}, #{authorinfo,jdbcType=VARCHAR}, #{booktype, jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.untitled.pojo.Book" >
+    insert into books
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="isbn != null" >
+        isbn,
+      </if>
+      <if test="bookname != null" >
+        bookname,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="publisher != null" >
+        publisher,
+      </if>
+      <if test="pubdate != null" >
+        pubdate,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="imgurl != null" >
+        imgurl,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="bookinfo != null" >
+        bookinfo,
+      </if>
+      <if test="authorinfo != null" >
+        authorinfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isbn != null" >
+        #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null" >
+        #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="pubdate != null" >
+        #{pubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="bookinfo != null" >
+        #{bookinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="authorinfo != null" >
+        #{authorinfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.untitled.pojo.Book" >
+    update books
+    <set >
+      <if test="isbn != null" >
+        isbn = #{isbn,jdbcType=VARCHAR},
+      </if>
+      <if test="bookname != null" >
+        bookname = #{bookname,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="publisher != null" >
+        publisher = #{publisher,jdbcType=VARCHAR},
+      </if>
+      <if test="pubdate != null" >
+        pubdate = #{pubdate,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="imgurl != null" >
+        imgurl = #{imgurl,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="bookinfo != null" >
+        bookinfo = #{bookinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="authorinfo != null" >
+        authorinfo = #{authorinfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.untitled.pojo.Book" >
+    update books
+    set isbn = #{isbn,jdbcType=VARCHAR},
+      bookname = #{bookname,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      pubdate = #{pubdate,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      imgurl = #{imgurl,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      bookinfo = #{bookinfo,jdbcType=VARCHAR},
+      authorinfo = #{authorinfo,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByBookname" parameterType="string" resultType="cn.untitled.pojo.Book">
+    select
+    <include refid="Base_Column_List" />
+    from books
+    where bookname like '%${value}%' limit 6
+  </select>
+  <select id="selectAll" parameterType="int" resultType="cn.untitled.pojo.Book">
+    select
+    <include refid="Base_Column_List"/>
+    from books limit #{value}
+  </select>
+  <select id="selectCount" resultType="int">
+    select count(1)
+    from books
+  </select>
+  <select id="selectByExample" parameterType="cn.untitled.pojo.QueryVoBook.Condation" resultType="cn.untitled.pojo.Book">
+    select
+    <include refid="Base_Column_List"/>
+    from books
+    <where >
+      <if test="keywords.flag != 0" >
+        and bookname like '%${keywords.key}%'
+      </if>
+      <if test="author.flag != 0" >
+        and author = #{author.key,jdbcType=VARCHAR}
+      </if>
+      <if test="publisher.flag != 0" >
+        and publisher = #{publisher.key,jdbcType=VARCHAR}
+      </if>
+      <if test="age.flag != 0" >
+        and age = #{age.key,jdbcType=INTEGER}
+      </if>
+      <if test="booktype.flag != 0" >
+        and booktype = #{booktype.key, jdbcType=VARCHAR}
+      </if>
+    </where>
+    limit #{startNumber}, 5
+  </select>
+</mapper>

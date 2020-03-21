@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--??????-->
+    <properties resource="generator.properties"></properties>
+
+    <!--????????jdbc??jar????-->
+    <classPathEntry location="${jdbc.driverLocation}"/>
+
+    <context id="default" targetRuntime="MyBatis3">
+
+        <!-- optional?????class????????? -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--jdbc?????? -->
+        <jdbcConnection
+                driverClass="${jdbc.driverClass}"
+                connectionURL="${jdbc.connectionURL}"
+                userId="${jdbc.userId}"
+                password="${jdbc.password}">
+        </jdbcConnection>
+
+
+        <!-- ?????????????????java?????????-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+        <!-- Model?????,????????key?????? ????Example?
+            targetPackage     ?????model???????
+            targetProject     ????????????
+        -->
+        <javaModelGenerator targetPackage="com.zhb.model"
+                            targetProject="src/main/java">
+
+            <!-- ????????targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- ???model?? ???? -->
+            <property name="constructorBased" value="true"/>
+            <!-- ????CHAR?????????trim?? -->
+            <property name="trimStrings" value="true"/>
+            <!-- ???Model???? ????  ????Model????? setter????????? -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!--Mapper??????????? ??????????????SqlMap?? -->
+        <sqlMapGenerator targetPackage="com.zhb.mapper"
+                         targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- ???????????????Model???XML???? ???
+                type="ANNOTATEDMAPPER",??Java Model ??????Mapper??
+                type="MIXEDMAPPER",???????Java Model ????Mapper??
+                type="XMLMAPPER",??SQLMap XML??????Mapper??
+        -->
+        <javaClientGenerator targetPackage="com.zhb.dao"
+                             targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+
+        <table tableName="books" domainObjectName="Book"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+
+    </context>
+</generatorConfiguration>

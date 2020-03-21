@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/vue-resource.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/axios.min.js"></script>
+    <!--框架和图标样式-->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!--下拉样式-->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/detail.css">
+</head>
+<body>
+<div class="page" id="page">
+
+    <div class="box" id="box">
+        <h4>儿童书籍查询</h4>
+        <div class="dropdown custom1">
+            <div v-on:mouseleave="dohide">
+                <ul class="dropdown2" >
+                    <li >
+                        <input v-model="keywords" name="keywords" v-on:input="dowrite" v-on:focus="dofocus" class="form-control seach_name" placeholder="请输入搜索内容"/>
+                        <a :href="'list.html?keywords=' + keywords"><i class="glyphicon glyphicon-search" ></i></a>
+                    </li>
+                    <li class="lwords" v-if="displayimgwords" v-for="item in imglist" @click="lwordsclecked">{{item.word}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+       <div class="detail">
+            <div class="bookdetail">
+                <img v-bind:src="book.imgurl" alt="书籍图片" onerror="this.src='https://img1.doubanio.com/f/shire/5522dd1f5b742d1e1394a17f44d590646b63871d/pics/book-default-lpic.gif'"/>
+                <div style="margin-left: 20px; border-left: 1px dashed #999; padding-bottom: 10px;"><table>
+                    <tr>
+                        <td><span>名称：</span></td>
+                        <td><span>{{book.bookname}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><span>类别：</span></td>
+                        <td>{{book.type}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>适合年龄段：</span></td>
+                        <td>{{book.age==2?'0-2岁':(book.age==6?'3-6岁':(book.age==10?'7-10岁':'11-12岁'))}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>作者：</span></td>
+                        <td>{{book.author}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>出版社：</span></td>
+                        <td>{{book.publisher}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>出版时间：</span></td>
+                        <td>{{book.pubdate}}</td>
+                    </tr>
+                    <tr>
+                        <td><span>ISBN：</span></td>
+                        <td>{{book.isbn}}</td>
+                    </tr>
+                    <tr v-if="book.url!=''">
+                        <td><span>欲购详情页：</span></td>
+                        <td><a v-bind:href="book.url" target="_blank">当当网本书的详情页</a></td>
+                    </tr>
+                </table></div>
+            </div>
+            <div class="bookborrow">
+                <span style="color: #70757a; margin: 12px 5px 20px 0px; line-height: 10px;">能借阅到本书的图书馆：</span>
+                <table>
+                    <tr>
+                        <td><span style="font-weight: bold">本藏书图书馆</span></td>
+                        <td><span style="font-weight: bold">本藏书的所在区域</span></td>
+                    </tr>
+                    <tr v-for="item in book.location">
+                        <td>{{item.library}}</td>
+                        <td>{{item.region}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="bookintro">
+                <h2 style="font-size: 16px; color: #007722;"><span>内容简介：</span>&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·</h2>
+                <p>
+                    {{book.bookinfo == "" ? "暂未收录本书的详细信息..." : book.bookinfo }}
+                </p>
+            </div>
+            <div class="authordetail">
+                <h2 style="font-size: 16px; color: #007722;"><span>作者简介：</span>&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·</h2>
+                <p>
+                    {{book.authorinfo == "" ? "暂未收录本书作者的详细信息..." : book.authorinfo}}
+                </p>
+            </div>
+       </div>
+
+        <div style="margin-top: 20px;">
+            <div class="notice">
+                <div class="recotitle">
+                    <span>亲子阅读活动通知</span>
+                </div>
+                <div class="noticetxt">
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2019年11月27号下午西安图书馆儿童区举办亲子阅读活动<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2019年12月8日上午长安区图书馆二楼西侧举办亲子共读活动</p>
+                </div>
+            </div>
+
+            <div class="recommend">
+                <div class="recotitle">
+                    <span>推荐书目</span>
+                </div>
+                <div class="recolist">
+                    <ul>
+                        <ul>
+                            <li>1. <a href="detail.html?bookid=7">伊索寓言</a></li>
+                            <li>2. <a href="detail.html?bookid=8">儿童卡通画大全</a></li>
+                            <li>3. <a href="detail.html?bookid=19">小牛的春天</a></li>
+                            <li>4. <a href="detail.html?bookid=48">两只狗</a></li>
+                            <li>5. <a href="detail.html?bookid=53">不再害怕和妈妈分开</a></li>
+                            <li>6. <a href="detail.html?bookid=58">彬彬的儿童礼仪日记</a></li>
+                            <li>7. <a href="detail.html?bookid=60">爱丽丝梦游仙境</a></li>
+                            <li>8. <a href="detail.html?bookid=78">汪汪的家</a></li>
+                            <li>9. <a href="detail.html?bookid=85">八十天环游地球：绘本</a></li>
+                            <li>10. <a href="detail.html?bookid=110">我的第一本亲子教养书</a></li>
+                            <li>11. <a href="detail.html?bookid=148">少儿围棋入门</a></li>
+                            <li>12. <a href="detail.html?bookid=155">狗男孩</a></li>
+                            <li>13. <a href="detail.html?bookid=177">八仙传奇：少儿版</a></li>
+                            <li>14. <a href="detail.html?bookid=194">木偶奇遇记</a></li>
+                            <li>15. <a href="detail.html?bookid=207">亲子游戏每天一个</a></li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+<script>
+    var vm = new Vue({
+        el: "#page",
+        data: {
+            keywords:"",
+            imglist: [
+                {word: "网页特效"},
+                {word: "网页设计"},
+                {word: "前端开发"},
+                {word: "php程序员"},
+                {word: "java开发"},
+                {word: ".net编程"}],
+            displayimgwords: false,
+            book: {
+                type: "传统文学",
+                age: "0-2岁",
+                imgurl: "book1.jpg",
+                bookname: "安徒生童话",
+                author: "安徒生",
+                publisher: "西北大学出版社",
+                pubdate: "2000.1.1",
+                isbn: "666666666",
+                address: "http://www.dangdang.com",
+                location: [
+                    {library: "西安图书馆", region: "儿童文学"},
+                    {library: "长安图书馆", region: "儿童文学"},
+                ],
+                bookinfo: "12岁的阿富汗富家少爷阿米尔与仆人哈桑情同手足。然而，在一场风筝比赛后，发生了一件悲惨不堪的事，阿米尔为自己的懦弱感到自责和痛苦，逼走了哈桑，不久，自己也跟随父亲逃往美国。 成年后的阿米尔始终无法原谅自己当年对哈桑的背叛。为了赎罪，阿米尔再度踏上暌违二十多年的故乡，希望能为不幸的好友尽最后一点心力，却发现一个惊天谎言，儿时的噩梦再度重演，阿米尔该如何抉择？ 故事如此残忍而又美丽，作者以温暖细腻的笔法勾勒人性的本质与救赎，读来令人荡气回肠。",
+                authorinfo: ""
+            }
+        },
+        methods: {
+            dowrite: function (event) {
+                //判断联想li是否出现
+                if (this.keywords == "")
+                    this.displayimgwords = false;
+                else
+                    this.displayimgwords = true;
+                //post提交数据
+                var that = this;
+                axios.post('/library/book/keywords', {
+                    keywords: that.keywords
+                }).then((response) => {
+                    console.log(response);
+                    this.imglist = response.data;
+                })
+            },
+            dohide: function(){
+                this.displayimgwords = false;
+            },
+
+            lwordsclecked: function(event){
+                this.keywords = event.target.firstChild.firstChild.data;
+            },
+            getUrlKey:function(name){       //获取URL的参数值
+                return decodeURIComponent((new RegExp('[?|&]'+name+'='+'([^&;]+?)(&|#|;|$)').exec(location.href)||[,""])[1].replace(/\+/g,'%20'))||null;
+            },
+            dofocus: function(event){
+                if(this.keywords != "")
+                    this.displayimgwords = true;
+            }
+        },
+        //请求数据
+        mounted: function(){
+            var id = this.getUrlKey("bookid");
+            axios.post("/library/book/book_detail?id="+id).then((response) =>{
+                console.log(response);
+                this.book = response.data;
+                console.log(this.book);
+            });
+        }
+
+    });
+</script>
+
+</html>

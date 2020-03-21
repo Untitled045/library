@@ -1,0 +1,83 @@
+﻿搜索框请求的数据
+发送数据
+{
+	keywords: ""
+}
+接受数据
+{
+	imglist: [
+			{word: "联想词"},
+			{word: ""},	
+			...(5-6条)
+		]
+}
+
+
+
+
+
+index页面书籍列表
+发送数据
+{
+	indexlist: 1
+}
+接收数据
+{
+	booklist: [
+			{imgurl: "",bookname: "",id: 123}
+			{imgurl: "",bookname: "",id: 123}
+			...(4n条)
+		]
+}
+
+
+
+
+list页面书籍列表
+发送数据
+{
+	type: {flag: 1/0,key: "传统文化"},
+	author:{flag: 1/0,key: "曹文轩"},
+	publisher:{flag: 1/0,key: "春风文艺出版社"},
+	age:{flag: 1/0,key: 2},
+	keywords: {flag: 1/0,key: "安徒生童话集"},
+	currentpage: 1
+}
+接受数据
+{
+	totalpage: 10,
+	currentpage: 1,
+	totaldata: 999,
+	pagesize: 10,
+	booklist: [
+			{bookimgurl: "",bookid: 123,bookname: "",author: "",bookinfo: ""},
+			...(pagesize条)
+		]
+}
+
+
+
+
+书籍获取详情
+发送数据
+{
+	id: 123
+}
+接收数据
+{
+	type: "",
+	age: "",(int转String)
+	imgurl: "",
+	bookname: "",
+	author: "",
+	publisher: "",
+	pubdate: "",
+	isbn: String,
+	address: "",
+	borrowlist:[
+			{library: "", region: ""},
+			...
+		],
+	bookinfo: "",
+	authorinfo: ""
+}
